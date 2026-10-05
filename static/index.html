@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hireline</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' fill='%231b1d1c'/%3E%3Crect x='3' y='7' width='10' height='2' fill='%23e8590c'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="/static/app.css?v=1.2.0">
+</head>
+<body>
+<header class="top">
+  <div class="mark"><b>Hireline</b><span>job feeds, official sources only</span></div>
+  <nav class="topnav">
+    <button type="button" id="openKeys" class="link">API keys</button>
+    <span id="ver" class="mono dim"></span>
+  </nav>
+</header>
+
+<form id="query" class="query" autocomplete="off">
+  <label class="q-what"><span>Role or keywords</span><input id="kw" placeholder="python developer"></label>
+  <label class="q-country"><span>Country</span>
+    <select id="cty"><option value="">Any country</option></select>
+  </label>
+  <div class="q-where combo" id="cityBox"><span class="lbl">City</span>
+    <input id="loc" placeholder="pick a country first" disabled autocomplete="off" role="combobox" aria-expanded="false" aria-controls="cityList">
+    <ul id="cityList" class="combo-list" role="listbox" hidden></ul>
+  </div>
+  <label class="q-days"><span>Posted</span>
+    <select id="days"><option value="0">any time</option><option value="1">24 hours</option><option value="7">7 days</option><option value="30" selected>30 days</option><option value="90">90 days</option></select>
+  </label>
+  <label class="q-limit"><span>Max / source</span><input id="limit" type="number" min="1" max="2000" value="150"></label>
+  <button id="go" class="go" type="submit">Run search</button>
+  <label class="q-remote"><input type="checkbox" id="remote"> <span>Also include remote jobs open to this country (worldwide / its region). Off = only jobs located in the city or country you entered.</span></label>
+</form>
+
+<section class="setup">
+  <div class="col">
+    <div class="colhead"><h2>Portals</h2><span class="dim" id="srcCount"></span>
+      <span class="spacer"></span><button type="button" class="link" data-pick="all">all</button><button type="button" class="link" data-pick="none">none</button></div>
+    <div id="srcList" class="srclist"></div>
+  </div>
+  <div class="col">
+    <div class="colhead"><h2>Company boards</h2><span class="dim">optional, one per line</span></div>
+    <textarea id="companies" rows="7" spellcheck="false" placeholder="stripe
+greenhouse:airbnb
+https://jobs.lever.co/palantir
+https://www.examplecompany.com/careers"></textarea>
+    <p class="hint">A plain name is checked on Greenhouse, Lever, Ashby, SmartRecruiters, Workable, Personio and Recruitee. A careers page URL is read for JobPosting data and for links to those boards.</p>
+  </div>
+</section>
+
+<section id="runbar" class="runbar" hidden>
+  <div class="ledger" id="ledger"></div>
+  <div class="runmeta"><span id="runState" class="mono"></span><span class="spacer"></span>
+    <span class="exports" id="exports" hidden>Export <a data-fmt="csv">CSV</a><a data-fmt="xlsx">Excel</a><a data-fmt="json">JSON</a></span></div>
+</section>
+
+<main id="results" class="results" hidden>
+  <div class="listpane">
+    <div class="listtools">
+      <input id="filter" placeholder="Filter results">
+      <select id="sort"><option value="posted">Newest first</option><option value="company">Company A-Z</option><option value="title">Title A-Z</option></select>
+      <span id="shown" class="mono dim"></span>
+    </div>
+    <ol id="list" class="list"></ol>
+    <button type="button" id="more" class="link more" hidden>Show more</button>
+  </div>
+  <article id="detail" class="detail"><p class="dim empty">Select a job to read the full posting.</p></article>
+</main>
+
+<dialog id="keys">
+  <form method="dialog" id="keysForm">
+    <h2>Free API keys</h2>
+    <p class="dim">Each key is free and unlocks one more portal: sign up on the linked page, paste the key here, save, and the portal can be ticked. Keys stay on this computer in data/settings.json.</p>
+    <div id="keyFields"></div>
+    <div class="dlgbtns"><button value="cancel" class="link">Close</button><button id="saveKeys" value="save" class="go">Save keys</button></div>
+  </form>
+</dialog>
+<script src="/static/app.js?v=1.2.0" defer></script>
+</body>
+</html>
