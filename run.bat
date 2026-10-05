@@ -8,7 +8,7 @@ if not defined HIRELINE_PORT set "HIRELINE_PORT=8100"
 rem --- first run on this PC: set everything up automatically ---
 if not exist ".venv\Scripts\python.exe" (
   echo  First run on this PC: running setup ...
-  call setup.bat /quiet
+  call "%~dp0setup.bat" /quiet
   if errorlevel 1 exit /b 1
 )
 
